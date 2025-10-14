@@ -1,0 +1,58 @@
+<!-- city-card-list.html -->
+<div class="container mx-auto px-4">
+  <h1 class="text-xl font-bold text-gray-500 mb-12">Cities Details</h1>
+  
+  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 justify-items-center">
+    <app-city-card 
+      *ngFor="let cityData of paginatedCities"
+      [city]="cityData.city"
+      [weatherIcon]="cityData.weatherIcon"
+      [temperature]="cityData.temperature"
+      [condition]="cityData.condition"
+      [date]="cityData.date"
+      [wind]="cityData.wind"
+      [humidity]="cityData.humidity"
+      [pressure]="cityData.pressure">
+    </app-city-card>
+  </div>
+
+  <!-- Pagination Controls -->
+  <div class="flex justify-center items-center mt-12 mb-8 gap-2">
+    <!-- Previous Button -->
+    <button 
+      (click)="previousPage()"
+      [disabled]="currentPage === 1"
+      class="px-4 py-2 rounded-lg border transition-colors disabled:opacity-50 disabled:cursor-not-allowed hover:bg-gray-100 disabled:hover:bg-transparent"
+      [class.bg-gray-100]="currentPage === 1">
+      Previous
+    </button>
+
+    <!-- Page Numbers -->
+    <div class="flex gap-2">
+      <button 
+        *ngFor="let page of pages"
+        (click)="goToPage(page)"
+        [class.bg-blue-500]="currentPage === page"
+        [class.text-white]="currentPage === page"
+        [class.hover:bg-blue-600]="currentPage === page"
+        [class.hover:bg-gray-100]="currentPage !== page"
+        class="px-4 py-2 rounded-lg border transition-colors">
+        {{ page }}
+      </button>
+    </div>
+
+    <!-- Next Button -->
+    <button 
+      (click)="nextPage()"
+      [disabled]="currentPage === totalPages"
+      class="px-4 py-2 rounded-lg border transition-colors disabled:opacity-50 disabled:cursor-not-allowed hover:bg-gray-100 disabled:hover:bg-transparent"
+      [class.bg-gray-100]="currentPage === totalPages">
+      Next
+    </button>
+  </div>
+
+  <!-- Page Info -->
+  <div class="text-center text-gray-600 text-sm mb-4">
+    Page {{ currentPage }} of {{ totalPages }} ({{ cities.length }} total cities)
+  </div>
+</div>

@@ -1,0 +1,166 @@
+.card {
+  width: 100%;
+  max-width: 260px;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  border-radius: 20px;
+  padding: 1rem;
+  color: #ffffff;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+  animation: fadeIn 0.6s ease-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(15px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.top-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.menu, .settings {
+  font-size: 1rem;
+  cursor: pointer;
+  padding: 6px;
+  transition: transform 0.2s ease;
+}
+
+.menu:hover, .settings:hover {
+  transform: scale(1.1);
+}
+
+.city {
+  font-size: 1rem;
+  font-weight: 600;
+  letter-spacing: 0.3px;
+}
+
+.card-header {
+  text-align: center;
+}
+
+.weather-icon {
+  font-size: 4rem;
+  margin: 1rem 0;
+  animation: float 3s ease-in-out infinite;
+  filter: drop-shadow(0 6px 12px rgba(0, 0, 0, 0.2));
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-10px); }
+}
+
+.temperature {
+  font-size: 3rem;
+  font-weight: 300;
+  line-height: 1;
+  margin-bottom: 0.3rem;
+  text-shadow: 0 3px 8px rgba(0, 0, 0, 0.2);
+}
+
+.condition {
+  font-size: 1rem;
+  font-weight: 400;
+  margin-bottom: 0.3rem;
+  opacity: 0.95;
+}
+
+.date {
+  font-size: 0.8rem;
+  opacity: 0.8;
+  margin-bottom: 1.2rem;
+  letter-spacing: 0.3px;
+}
+
+.card-body {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.7rem;
+  margin-bottom: 1.2rem;
+}
+
+.info-box {
+  background: rgba(255, 255, 255, 0.12);
+  border-radius: 12px;
+  padding: 0.6rem 0.4rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.2rem;
+  transition: all 0.3s ease;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.info-box:hover {
+  background: rgba(255, 255, 255, 0.18);
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+}
+
+.info-box span {
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+.info-box small {
+  font-size: 0.7rem;
+  opacity: 0.8;
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+}
+
+.forecast {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 0.4rem;
+  padding-top: 1rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.day {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.3rem;
+  padding: 0.5rem 0.2rem;
+  border-radius: 10px;
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+.day:hover {
+  background: rgba(255, 255, 255, 0.1);
+  transform: translateY(-2px);
+}
+
+.day-name {
+  font-size: 0.7rem;
+  opacity: 0.8;
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+  font-weight: 600;
+}
+
+.icon {
+  font-size: 1.4rem;
+  transition: transform 0.3s ease;
+}
+
+.day:hover .icon {
+  transform: scale(1.15);
+}
+
+.temp {
+  font-weight: 600;
+  font-size: 0.8rem;
+}

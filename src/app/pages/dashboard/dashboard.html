@@ -1,0 +1,35 @@
+<!-- Container avec image de fond -->
+<div
+  class="relative bg-cover bg-center bg-no-repeat"
+  style="background-image: url('assets/images/bg3.png');"
+>
+  <!-- Couche semi-transparente pour assombrir légèrement le fond -->
+  <div class="absolute inset-0"></div>
+
+  <!-- Contenu principal -->
+  <div class="relative max-w-4xl mx-auto px-4 py-16 text-white">
+    <!-- Introduction Section -->
+    <div class="text-center mb-8">
+      <h1 class="text-3xl md:text-4xl font-bold mb-6 text-yellow-400">
+        Welcome to Weatherio
+      </h1>
+      <p class="text-lg md:text-l font-small max-w-3xl mx-auto leading-relaxed text-gray-500">
+        Your personal weather dashboard. Track weather conditions for multiple cities in real-time and stay informed about the forecast wherever you are.
+      </p>
+    </div>
+
+    <!-- Search Section -->
+    <div class="mb-8">
+      <app-searchbar />
+    </div>
+
+<app-statistics/>
+      </div>
+</div>
+    <!-- Cities Cards -->
+    <div class="container mx-auto px-6 py-8">
+    <div class="mt-12">
+      <app-city-card-list />
+    </div>
+    </div>
+
