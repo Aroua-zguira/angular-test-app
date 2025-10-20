@@ -1,5 +1,4 @@
-// city-card-list.component.ts
-import { Component } from '@angular/core';
+import { Component, Input, Output, EventEmitter, OnInit, OnChanges, SimpleChanges } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { CityCard } from '../city-card/city-card';
 
@@ -12,6 +11,8 @@ interface CityData {
   wind: number;
   humidity: number;
   pressure: number;
+  lat: number;
+  lon: number;
 }
 
 @Component({
@@ -21,192 +22,33 @@ interface CityData {
   templateUrl: './city-card-list.html',
   styleUrl: './city-card-list.css'
 })
-export class CityCardList {
-  cities: CityData[] = [
-    {
-      city: 'San Francisco',
-      weatherIcon: '☀️',
-      temperature: 24,
-      condition: 'Sunny',
-      date: 'Monday, Oct 14',
-      wind: 12,
-      humidity: 65,
-      pressure: 1013
-    },
-    {
-      city: 'New York',
-      weatherIcon: '⛅',
-      temperature: 18,
-      condition: 'Partly Cloudy',
-      date: 'Monday, Oct 14',
-      wind: 15,
-      humidity: 72,
-      pressure: 1015
-    },
-    {
-      city: 'London',
-      weatherIcon: '🌧️',
-      temperature: 12,
-      condition: 'Rainy',
-      date: 'Monday, Oct 14',
-      wind: 20,
-      humidity: 85,
-      pressure: 1008
-    },
-    {
-      city: 'Tokyo',
-      weatherIcon: '🌤️',
-      temperature: 22,
-      condition: 'Mostly Sunny',
-      date: 'Monday, Oct 14',
-      wind: 8,
-      humidity: 60,
-      pressure: 1018
-    },
-    {
-      city: 'Paris',
-      weatherIcon: '🌤️',
-      temperature: 22,
-      condition: 'Mostly Sunny',
-      date: 'Monday, Oct 14',
-      wind: 8,
-      humidity: 60,
-      pressure: 1018
-    },
-    {
-      city: 'Berlin',
-      weatherIcon: '🌤️',
-      temperature: 22,
-      condition: 'Mostly Sunny',
-      date: 'Monday, Oct 14',
-      wind: 8,
-      humidity: 60,
-      pressure: 1018
-    },
-    {
-      city: 'Madrid',
-      weatherIcon: '🌤️',
-      temperature: 22,
-      condition: 'Mostly Sunny',
-      date: 'Monday, Oct 14',
-      wind: 8,
-      humidity: 60,
-      pressure: 1018
-    },
-    {
-      city: 'Rome',
-      weatherIcon: '🌤️',
-      temperature: 22,
-      condition: 'Mostly Sunny',
-      date: 'Monday, Oct 14',
-      wind: 8,
-      humidity: 60,
-      pressure: 1018
-    },
-    {
-      city: 'Sydney',
-      weatherIcon: '🌤️',
-      temperature: 22,
-      condition: 'Mostly Sunny',
-      date: 'Monday, Oct 14',
-      wind: 8,
-      humidity: 60,
-      pressure: 1018
-    },
-        {
-      city: 'Berlin',
-      weatherIcon: '🌤️',
-      temperature: 22,
-      condition: 'Mostly Sunny',
-      date: 'Monday, Oct 14',
-      wind: 8,
-      humidity: 60,
-      pressure: 1018
-    },
-    {
-      city: 'Madrid',
-      weatherIcon: '🌤️',
-      temperature: 22,
-      condition: 'Mostly Sunny',
-      date: 'Monday, Oct 14',
-      wind: 8,
-      humidity: 60,
-      pressure: 1018
-    },
-    {
-      city: 'Rome',
-      weatherIcon: '🌤️',
-      temperature: 22,
-      condition: 'Mostly Sunny',
-      date: 'Monday, Oct 14',
-      wind: 8,
-      humidity: 60,
-      pressure: 1018
-    },
-    {
-      city: 'Sydney',
-      weatherIcon: '🌤️',
-      temperature: 22,
-      condition: 'Mostly Sunny',
-      date: 'Monday, Oct 14',
-      wind: 8,
-      humidity: 60,
-      pressure: 1018
-    },
-        {
-      city: 'Berlin',
-      weatherIcon: '🌤️',
-      temperature: 22,
-      condition: 'Mostly Sunny',
-      date: 'Monday, Oct 14',
-      wind: 8,
-      humidity: 60,
-      pressure: 1018
-    },
-    {
-      city: 'Madrid',
-      weatherIcon: '🌤️',
-      temperature: 22,
-      condition: 'Mostly Sunny',
-      date: 'Monday, Oct 14',
-      wind: 8,
-      humidity: 60,
-      pressure: 1018
-    },
-    {
-      city: 'Rome',
-      weatherIcon: '🌤️',
-      temperature: 22,
-      condition: 'Mostly Sunny',
-      date: 'Monday, Oct 14',
-      wind: 8,
-      humidity: 60,
-      pressure: 1018
-    },
-    {
-      city: 'Sydney',
-      weatherIcon: '🌤️',
-      temperature: 22,
-      condition: 'Mostly Sunny',
-      date: 'Monday, Oct 14',
-      wind: 8,
-      humidity: 60,
-      pressure: 1018
-    }
-  ];
+export class CityCardList implements OnInit, OnChanges {
+  @Input() cities: any[] = [];
+  @Input() isLoading: boolean = false;
+  @Output() cityDeleted = new EventEmitter<{ lat: number, lon: number }>();
 
   // Pagination properties
   itemsPerPage = 8;
   currentPage = 1;
 
+  ngOnInit() {
+    // Component initialization
+  }
+
+  ngOnChanges(changes: SimpleChanges) {
+    // Reset to first page when cities data changes
+    if (changes['cities'] && !changes['cities'].firstChange) {
+      this.currentPage = 1;
+    }
+  }
+
   get totalPages(): number {
     return Math.ceil(this.cities.length / this.itemsPerPage);
   }
 
-  get paginatedCities(): CityData[] {
+  get paginatedCities(): any[] {
     const start = (this.currentPage - 1) * this.itemsPerPage;
-    const end = start + this.itemsPerPage;
-    return this.cities.slice(start, end);
+    return this.cities.slice(start, start + this.itemsPerPage);
   }
 
   get pages(): number[] {
@@ -226,5 +68,9 @@ export class CityCardList {
 
   previousPage(): void {
     this.goToPage(this.currentPage - 1);
+  }
+
+  onCityDeleted(location: { lat: number, lon: number }) {
+    this.cityDeleted.emit(location);
   }
 }

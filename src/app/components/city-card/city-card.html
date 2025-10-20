@@ -1,15 +1,22 @@
-<div class="bg-gradient-to-br from-white-50 to-white-50 rounded-2xl  shadow-lg p-4 max-w-xs">
+<div class="bg-gradient-to-br from-white-50 to-white-50 rounded-2xl shadow-lg p-4 max-w-xs hover:shadow-xl transition-shadow">
   <!-- Top Bar -->
   <div class="flex items-center justify-between mb-3">
     <button class="text-gray-600 hover:text-gray-800 text-sm">☰</button>
     <h2 class="text-sm font-semibold text-gray-700">{{ city }}</h2>
-    <button class="text-gray-600 hover:text-gray-800 text-sm">⚙️</button>
+    <button 
+      (click)="onDelete()"
+      class="text-red-400 hover:text-red-700 hover:bg-red-50 rounded-full p-1.5 transition-colors"
+      title="Delete city">
+      <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+      </svg>
+    </button>
   </div>
 
   <!-- Main Weather Display -->
   <div class="text-center mb-4">
-    <div class="inline-block bg-yellow-100 rounded-full p-3 mb-2">
-      <div class="text-3xl">☀️</div>
+    <div [ngClass]="getBackgroundColor()" class="inline-block rounded-full p-3 mb-2 transition-colors">
+      <div class="text-3xl">{{ getWeatherIcon() }}</div>
     </div>
     <div class="text-4xl font-bold text-gray-800 mb-1">{{ temperature }}°</div>
     <div class="text-sm text-gray-600 mb-1">{{ condition }}</div>
