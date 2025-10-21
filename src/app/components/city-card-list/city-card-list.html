@@ -1,18 +1,18 @@
 <div class="container mx-auto px-4">
   <h1 class="text-xl font-bold text-gray-500 mb-12">Cities Details</h1>
   
-  <!-- Loading Spinner -->
+  
   <div *ngIf="isLoading" class="flex flex-col items-center justify-center min-h-[400px]">
     <div class="relative">
-      <!-- Spinner -->
+      
       <div class="w-16 h-16 border-4 border-blue-200 border-t-blue-500 rounded-full animate-spin"></div>
     </div>
     <p class="mt-4 text-gray-600 text-lg">Loading cities data...</p>
   </div>
 
-  <!-- Content (shown when not loading) -->
+  
   <div *ngIf="!isLoading">
-    <!-- City Cards Grid -->
+    
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 justify-items-center">
       <app-city-card 
         *ngFor="let cityData of paginatedCities"
@@ -26,18 +26,24 @@
         [pressure]="cityData.pressure"
         [lat]="cityData.lat"
         [lon]="cityData.lon"
-        (deleteCity)="onCityDeleted($event)">
+        (deleteCity)="onCityDeleted($event)"
+        (openDetails)="onOpenDetails(cityData)">
       </app-city-card>
+      <app-details-modal
+  [isOpen]="modalOpen"
+  [weatherData]="selectedCityData"
+  (closeModal)="modalOpen = false"
+></app-details-modal>
     </div>
 
-    <!-- Empty State (when no cities) -->
+    
     <div *ngIf="cities.length === 0" class="text-center py-12">
       <p class="text-gray-500 text-lg">No cities found</p>
     </div>
 
-    <!-- Pagination Controls -->
+    
     <div *ngIf="cities.length > 0" class="flex justify-center items-center mt-12 mb-8 gap-2">
-      <!-- Previous Button -->
+      
       <button 
         (click)="previousPage()"
         [disabled]="currentPage === 1"
@@ -46,7 +52,7 @@
         Previous
       </button>
 
-      <!-- Page Numbers -->
+      
       <div class="flex gap-2">
         <button 
           *ngFor="let page of pages"
@@ -60,7 +66,7 @@
         </button>
       </div>
 
-      <!-- Next Button -->
+      
       <button 
         (click)="nextPage()"
         [disabled]="currentPage === totalPages"
@@ -70,7 +76,7 @@
       </button>
     </div>
 
-    <!-- Page Info -->
+    
     <div *ngIf="cities.length > 0" class="text-center text-gray-600 text-sm mb-4">
       Page {{ currentPage }} of {{ totalPages }} ({{ cities.length }} total cities)
     </div>

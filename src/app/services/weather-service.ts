@@ -8,7 +8,6 @@ import { environment } from '../../environments/environment';
 })
 export class WeatherService {
 
-
   constructor(private http: HttpClient) {}
 
   getWeather(lat: number, lon: number): Observable<any> {
@@ -19,10 +18,17 @@ export class WeatherService {
         city: data.name,
         temperature: Math.round(data.main.temp),
         condition: data.weather[0].description,
-        weatherIcon: `https://openweathermap.org/img/wn/${data.weather[0].icon}@2x.png`,
         wind: data.wind.speed,
+        tempMin: Math.round(data.main.temp_min),
+        tempMax: Math.round(data.main.temp_max),
         humidity: data.main.humidity,
         pressure: data.main.pressure,
+        feelsLike: Math.round(data.main.feels_like),
+        windDirection: data.wind.deg,
+        clouds: data.clouds.all,
+        visibility: data.visibility,
+        sunrise: new Date(data.sys.sunrise * 1000).toLocaleTimeString(),
+        sunset: new Date(data.sys.sunset * 1000).toLocaleTimeString(),
         date: new Date().toLocaleDateString(undefined, {
           weekday: 'long',
           month: 'short',

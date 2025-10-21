@@ -1,27 +1,8 @@
-import { Component, Input, Output, EventEmitter } from '@angular/core';
+import { Component, Input, Output, EventEmitter, SimpleChanges } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { DetailedWeatherData } from '../../models/detailedweather';
 
-interface DetailedWeatherData {
-  city: string;
-  country: string;
-  temperature: number;
-  feelsLike: number;
-  tempMin: number;
-  tempMax: number;
-  condition: string;
-  description: string;
-  humidity: number;
-  pressure: number;
-  wind: number;
-  windDirection: number;
-  clouds: number;
-  visibility: number;
-  sunrise: string;
-  sunset: string;
-  timezone: number;
-  lat: number;
-  lon: number;
-}
+
 
 @Component({
   selector: 'app-details-modal',
@@ -35,12 +16,25 @@ export class DetailsModal {
   @Input() weatherData: DetailedWeatherData | null = null;
   @Output() closeModal = new EventEmitter<void>();
 
+  ngOnChanges(changes: SimpleChanges) {
+    if (changes['isOpen']) {
+      if (this.isOpen) {
+        document.body.style.overflow = 'hidden';
+      } else {
+        document.body.style.overflow = '';
+      }
+    }
+  }
+
+  ngOnDestroy() {
+    document.body.style.overflow = '';
+  }
+
   onClose() {
     this.closeModal.emit();
   }
 
   onBackdropClick(event: MouseEvent) {
-    // Close modal when clicking on backdrop (not the modal content)
     if (event.target === event.currentTarget) {
       this.onClose();
     }

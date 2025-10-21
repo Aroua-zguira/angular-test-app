@@ -21,21 +21,22 @@ export class CityCard {
   @Input() lon!: number;
   
   @Output() deleteCity = new EventEmitter<{ lat: number, lon: number }>();
+  @Output() openDetails = new EventEmitter<void>();
 
   onDelete() {
     this.deleteCity.emit({ lat: this.lat, lon: this.lon });
   }
+  onOpen() {
+  this.openDetails.emit();
+}
 
-  // Get dynamic weather icon based on condition
   getWeatherIcon(): string {
     const condition = this.condition.toLowerCase();
     
-    // Clear weather
     if (condition.includes('clear') || condition.includes('sunny')) {
       return '☀️';
     }
     
-    // Cloudy weather
     if (condition.includes('cloud') || condition.includes('overcast')) {
       if (condition.includes('partly')) {
         return '⛅';
@@ -43,7 +44,7 @@ export class CityCard {
       return '☁️';
     }
     
-    // Rain
+    
     if (condition.includes('rain')) {
       if (condition.includes('light')) {
         return '🌦️';
@@ -54,17 +55,15 @@ export class CityCard {
       return '🌧️';
     }
     
-    // Drizzle
     if (condition.includes('drizzle')) {
       return '🌦️';
     }
     
-    // Thunderstorm
     if (condition.includes('thunder') || condition.includes('storm')) {
       return '⛈️';
     }
     
-    // Snow
+    
     if (condition.includes('snow')) {
       if (condition.includes('light')) {
         return '🌨️';
@@ -72,26 +71,26 @@ export class CityCard {
       return '❄️';
     }
     
-    // Fog/Mist
+    
     if (condition.includes('fog') || condition.includes('mist') || condition.includes('haze')) {
       return '🌫️';
     }
     
-    // Wind
+    
     if (condition.includes('wind')) {
       return '💨';
     }
     
-    // Tornado
+    
     if (condition.includes('tornado')) {
       return '🌪️';
     }
     
-    // Default fallback
+    
     return this.weatherIcon || '☀️';
   }
 
-  // Get dynamic background color based on condition
+  
   getBackgroundColor(): string {
     const condition = this.condition.toLowerCase();
     
@@ -114,6 +113,6 @@ export class CityCard {
       return 'bg-slate-100';
     }
     
-    return 'bg-yellow-100'; // default
+    return 'bg-yellow-100'; 
   }
 }

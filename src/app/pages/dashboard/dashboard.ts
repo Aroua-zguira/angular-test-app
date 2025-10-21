@@ -1,4 +1,3 @@
-// dashboard.component.ts
 import { Component, OnInit } from '@angular/core';
 import { Searchbar } from "../../components/searchbar/searchbar";
 import { CityCardList } from "../../components/city-card-list/city-card-list";
@@ -17,42 +16,64 @@ import { catchError } from 'rxjs/operators';
 })
 export class Dashboard implements OnInit {
   selectedCities: any[] = [];
-  isLoadingCities: boolean = false; // Add loading state
+  isLoadingCities: boolean = false; 
   private storageKey = 'weatherio-cities';
   private savedLocations: Location[] = [];
-
+  cityNumber: number = 0;
+  avgTemperature: number = 0;
+  avgHumidity: number = 0;
+  
   constructor(private weatherService: WeatherService) {}
 
   ngOnInit() {
     this.loadCitiesFromStorage();
   }
 
-  // ✅ Load locations from localStorage and fetch fresh weather data
+  private calculateStatistics() {
+    if (this.selectedCities.length === 0) {
+      this.avgTemperature = 0;
+      this.avgHumidity = 0;
+      return;
+    }
+
+    const totalTemp = this.selectedCities.reduce((sum, city) => sum + city.temperature, 0);
+    const totalHumidity = this.selectedCities.reduce((sum, city) => sum + city.humidity, 0);
+
+    this.avgTemperature = Math.round(totalTemp / this.selectedCities.length);
+    this.avgHumidity = Math.round(totalHumidity / this.selectedCities.length);
+
+    console.log('📊 Statistics updated:', {
+      avgTemperature: this.avgTemperature,
+      avgHumidity: this.avgHumidity,
+      cityCount: this.selectedCities.length
+    });
+  }
+
   private loadCitiesFromStorage() {
     const stored = localStorage.getItem(this.storageKey);
     if (stored) {
       try {
         this.savedLocations = JSON.parse(stored);
+        this.cityNumber = this.savedLocations.length;
         console.log('📦 Loaded locations from localStorage:', this.savedLocations);
         
         if (this.savedLocations.length > 0) {
-          this.isLoadingCities = true; // Start loading
+          this.isLoadingCities = true; 
           
-          // Create an array of observables for all weather requests
           const weatherRequests = this.savedLocations.map(location =>
             this.weatherService.getWeather(location.lat, location.lon).pipe(
               catchError(error => {
                 console.error(`Error fetching weather for ${location.name}:`, error);
-                return of(null); // Return null on error to continue with other requests
+                return of(null); 
               })
             )
           );
 
-          // Wait for all requests to complete
           forkJoin(weatherRequests).subscribe(
             (weatherDataArray) => {
               weatherDataArray.forEach((weatherData, index) => {
                 if (weatherData) {
+                  console.log('this is the weather data', weatherData);
                   const location = this.savedLocations[index];
                   const cityWithWeather = {
                     ...weatherData,
@@ -67,11 +88,12 @@ export class Dashboard implements OnInit {
                   console.log('🌦️ Added city with fresh weather:', cityWithWeather);
                 }
               });
-              this.isLoadingCities = false; // Stop loading when all requests complete
+              this.calculateStatistics();
+              this.isLoadingCities = false; 
             },
             (error) => {
               console.error('Error loading cities:', error);
-              this.isLoadingCities = false; // Stop loading on error
+              this.isLoadingCities = false; 
             }
           );
         }
@@ -82,13 +104,11 @@ export class Dashboard implements OnInit {
     }
   }
 
-  // ✅ Save only location data (no weather) to localStorage
   private saveCitiesToStorage() {
     localStorage.setItem(this.storageKey, JSON.stringify(this.savedLocations));
     console.log('💾 Saved locations to localStorage:', this.savedLocations);
   }
 
-  // ✅ Fetch weather and add city to the list
   private fetchAndAddCity(location: Location, shouldSave: boolean = true) {
     this.weatherService.getWeather(location.lat, location.lon).subscribe(
       (weatherData) => {
@@ -103,16 +123,15 @@ export class Dashboard implements OnInit {
             displayName: location.displayName
           };
           
-          // Only add if not already in the array
           const exists = this.selectedCities.some(
             city => city.lat === location.lat && city.lon === location.lon
           );
           
           if (!exists) {
             this.selectedCities.push(cityWithWeather);
+            this.cityNumber++;
             console.log('🌦️ Added city with fresh weather:', cityWithWeather);
             
-            // If this is a new city (not from load), add to savedLocations and save
             if (shouldSave) {
               const locationData: Location = {
                 name: location.name,
@@ -125,6 +144,8 @@ export class Dashboard implements OnInit {
               this.savedLocations.push(locationData);
               this.saveCitiesToStorage();
             }
+            
+            this.calculateStatistics();
           }
         }
       },
@@ -132,7 +153,6 @@ export class Dashboard implements OnInit {
     );
   }
 
-  // ✅ Add new city if not already added
   onLocationSelected(location: Location) {
     const alreadyExists = this.selectedCities.some(
       (city) => city.lat === location.lat && city.lon === location.lon
@@ -146,21 +166,19 @@ export class Dashboard implements OnInit {
     this.fetchAndAddCity(location, true);
   }
 
-  // Add this method to your Dashboard component
-onCityDeleted(location: { lat: number, lon: number }) {
-  // Remove from selectedCities array
-  this.selectedCities = this.selectedCities.filter(
-    city => !(city.lat === location.lat && city.lon === location.lon)
-  );
+  onCityDeleted(location: { lat: number, lon: number }) {
+    this.selectedCities = this.selectedCities.filter(
+      city => !(city.lat === location.lat && city.lon === location.lon)
+    );
 
-  // Remove from savedLocations array
-  this.savedLocations = this.savedLocations.filter(
-    loc => !(loc.lat === location.lat && loc.lon === location.lon)
-  );
+    this.savedLocations = this.savedLocations.filter(
+      loc => !(loc.lat === location.lat && loc.lon === location.lon)
+    );
+    this.cityNumber--;
 
-  // Update localStorage
-  this.saveCitiesToStorage();
-  
-  console.log('🗑️ Deleted city:', location);
-}
+    this.saveCitiesToStorage();
+    this.calculateStatistics();
+    
+    console.log('🗑️ Deleted city:', location);
+  }
 }

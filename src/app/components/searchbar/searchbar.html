@@ -1,10 +1,10 @@
 <div class="w-full max-w-xl mx-auto">
-  <!-- Search Wrapper -->
+  
   <div class="relative">
     <div 
       [class]="'relative flex items-center bg-white rounded-full shadow-lg transition-all duration-300 ' + (isFocused ? 'ring-2 ring-blue-500 shadow-2xl' : 'shadow-md hover:shadow-xl')">
       
-      <!-- Search Icon or Loading Spinner -->
+      
       <div class="absolute left-4 flex items-center pointer-events-none">
         <svg 
           *ngIf="!isLoading"
@@ -19,7 +19,7 @@
             d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
         </svg>
         
-        <!-- Loading Spinner -->
+        
         <svg 
           *ngIf="isLoading"
           class="w-5 h-5 text-blue-500 animate-spin" 
@@ -42,7 +42,7 @@
         </svg>
       </div>
 
-      <!-- Input Field -->
+      
       <input
         type="text"
         [(ngModel)]="searchQuery"
@@ -53,9 +53,9 @@
         class="w-full py-3 pl-12 pr-24 text-gray-700 bg-transparent rounded-full outline-none text-base placeholder-gray-400 transition-all duration-200"
       />
 
-      <!-- Action Buttons Container -->
+      
       <div class="absolute right-2 flex items-center gap-1">
-        <!-- Clear Button -->
+        
         <button
           *ngIf="searchQuery.length > 0"
           (click)="clearSearch()"
@@ -73,7 +73,7 @@
       </div>
     </div>
 
-    <!-- Search Suggestions Dropdown -->
+    
     <div 
       *ngIf="showSuggestions && suggestions.length > 0"
       class="absolute w-full mt-2 bg-white rounded-2xl shadow-2xl overflow-hidden z-50 border border-gray-100">
@@ -109,7 +109,7 @@
       </ul>
     </div>
 
-    <!-- No Results Message -->
+    
     <div 
       *ngIf="showSuggestions && suggestions.length === 0 && searchQuery.length >= 2 && !isLoading"
       class="absolute w-full mt-2 bg-white rounded-2xl shadow-2xl overflow-hidden z-50 border border-gray-100">

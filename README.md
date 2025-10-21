@@ -1,59 +1,109 @@
-# AngularHw
-
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 20.3.5.
-
-## Development server
-
+# Weatherio - Angular Weather Dashboard
+ 
+A modern, responsive weather dashboard application built with Angular 20 that allows users to track weather conditions across multiple cities worldwide.
+ 
+## Features
+ 
+- 🌍 **Multi-City Weather Tracking** - Add and monitor weather for multiple cities simultaneously
+- 🔍 **City Search** - Search cities by name with autocomplete suggestions
+- 📊 **Weather Statistics** - View average temperature and humidity across all tracked cities
+- 💾 **Persistent Storage** - Saved cities are stored locally and restored on page reload
+- 📱 **Responsive Design** - Fully responsive interface built with Tailwind CSS
+- 🎨 **Detailed Weather Modal** - View comprehensive weather data including:
+  - Current temperature and "feels like" temperature
+  - Temperature range (min/max)
+  - Humidity, pressure, cloudiness, and visibility
+  - Wind speed and direction
+  - Sunrise and sunset times
+- 🌤️ **Weather Icons** - Dynamic weather condition icons based on current weather
+- ⚡ **Real-time Updates** - Fresh weather data fetched from OpenWeatherMap API
+ 
+## Prerequisites
+ 
+Before you begin, ensure you have the following installed:
+- [Node.js](https://nodejs.org/) (v18 or higher)
+- [npm](https://www.npmjs.com/) (comes with Node.js)
+- [Angular CLI](https://angular.dev/tools/cli) version 20.3.5
+ 
+## Installation
+ 
+1. **Clone the repository**
+   ```bash
+   git clone https://github.com/Aroua-zguira/angular-test-app.git
+   cd angular-test-app
+   ```
+ 
+2. **Install dependencies**
+   ```bash
+   npm install
+   ```
+ 
+ 
+## Development Server
+ 
 To start a local development server, run:
-
+ 
 ```bash
-ng serve
+npm start
 ```
-
+ 
 Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
-
-## Code scaffolding
-
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
-
-```bash
-ng generate component component-name
+ 
+## Project Structure
+ 
 ```
-
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
-
-```bash
-ng generate --help
+src/
+├── app/
+│   ├── components/
+│   │   ├── city-card/           # Individual city weather card
+│   │   ├── city-card-list/      # Grid of city cards
+│   │   ├── details-modal/       # Detailed weather modal
+│   │   ├── header/              # Header component
+│   │   ├── searchbar/           # City search component
+│   │   └── statistics/          # Weather statistics display
+│   ├── pages/
+│   │   └── dashboard/           # Main dashboard page
+│   ├── services/
+│   │   ├── weather-service.ts   # Weather API service
+│   │   └── location-service.ts  # Geocoding API service
+│   └── models/
+│       └── location.ts          # Location data model
+│       └── detailedwaether.ts   # detailed weather data model
+├── environments/                # Environment configurations
+└── assets/                      # Static assets
 ```
-
-## Building
-
-To build the project run:
-
-```bash
-ng build
-```
-
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
-
-## Running unit tests
-
-To execute unit tests with the [Karma](https://karma-runner.github.io) test runner, use the following command:
-
-```bash
-ng test
-```
-
-## Running end-to-end tests
-
-For end-to-end (e2e) testing, run:
-
-```bash
-ng e2e
-```
-
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
-
-## Additional Resources
-
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+ 
+ 
+ 
+ 
+ 
+ 
+## Technologies Used
+ 
+- **Angular 20** - Frontend framework
+- **TypeScript** - Programming language
+- **Tailwind CSS** - Utility-first CSS framework
+- **RxJS** - Reactive programming library
+- **OpenWeatherMap API** - Weather data provider
+- **API Ninjas Geocoding** - Location search and geocoding
+ 
+## Key Features Implementation
+ 
+### Local Storage
+Cities are persisted in browser's localStorage using the key `weatherio-cities`. The data structure includes:
+- City name, state, and country
+- Latitude and longitude coordinates
+ 
+### Weather Data
+Real-time weather data is fetched for each city including:
+- Temperature (current, min, max, feels like)
+- Weather conditions and description
+- Atmospheric data (humidity, pressure, visibility, clouds)
+- Wind information (speed, direction)
+- Sun times (sunrise, sunset)
+ 
+### Statistics Calculation
+The dashboard automatically calculates and displays:
+- Average temperature across all tracked cities
+- Average humidity across all tracked cities
+- Total number of tracked cities

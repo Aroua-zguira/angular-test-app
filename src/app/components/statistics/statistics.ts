@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 
 @Component({
   selector: 'app-statistics',
@@ -7,5 +7,8 @@ import { Component } from '@angular/core';
   styleUrl: './statistics.css'
 })
 export class Statistics {
+  @Input() cityNumber: number = 0
+  @Input() avgTemperature: number = 0
+  @Input() avgHumidity: number = 0
 
 }

@@ -14,15 +14,13 @@ export class GeoLocationService {
   
   constructor(private http: HttpClient) {}
 
-  /**
-   * Search for locations by query string with autocomplete
-   */
+  
   searchLocations(query: string, limit: number = 5): Observable<Location[]> {
     if (!query || query.trim().length < 2) {
       return of([]);
     }
 
-    // Nominatim requires a User-Agent header
+    
     const headers = new HttpHeaders({
       'Accept': 'application/json'
     });
@@ -35,7 +33,7 @@ export class GeoLocationService {
       `featuretype=city`;
     
     return this.http.get<any[]>(url, { headers }).pipe(
-      // Add small delay to respect rate limits (max 1 request per second)
+      
       delay(100),
       map(results => {
         return results
@@ -50,9 +48,7 @@ export class GeoLocationService {
     );
   }
 
-  /**
-   * Parse Nominatim result to Location interface
-   */
+
   private parseNominatimResult(result: any): Location {
     const address = result.address || {};
     const name = address.city || address.town || address.village || 
@@ -68,12 +64,5 @@ export class GeoLocationService {
       lon: parseFloat(result.lon),
       
     };
-  }
-
-  
-
- 
-
-  
-  
+  } 
 }

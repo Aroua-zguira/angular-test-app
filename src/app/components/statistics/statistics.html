@@ -1,5 +1,5 @@
 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 p-4">
-  <!-- Cities Added Card -->
+  
   <div class="bg-white rounded-2xl border-2 border-yellow-400 p-4 shadow-sm flex items-center gap-3">
     <div class="bg-yellow-100 rounded-xl p-3">
       <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-yellow-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -9,11 +9,11 @@
     </div>
     <div class="flex-1">
       <p class="text-gray-500 text-xs font-medium">Cities Added</p>
-      <p class="text-xl font-bold text-gray-600">10</p>
+      <p class="text-xl font-bold text-gray-600">{{cityNumber}}</p>
     </div>
   </div>
 
-  <!-- Average Temperature Card -->
+  
   <div class="bg-white rounded-2xl border-2  border-yellow-400 p-4 shadow-sm flex items-center gap-3">
     <div class="bg-yellow-100 rounded-xl p-3">
       <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-yellow-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -22,11 +22,11 @@
     </div>
     <div class="flex-1">
       <p class="text-gray-500 text-xs font-medium">Avg Temperature</p>
-      <p class="text-xl font-bold text-gray-600">43°C</p>
+      <p class="text-xl font-bold text-gray-600">{{avgTemperature}}C</p>
     </div>
   </div>
 
-  <!-- Average Humidity Card -->
+  
   <div class="bg-white rounded-2xl border-2  border-yellow-400 p-4 shadow-sm flex items-center gap-3">
     <div class="bg-yellow-100 rounded-xl p-3">
       <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-yellow-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -35,11 +35,11 @@
     </div>
     <div class="flex-1">
       <p class="text-gray-500 text-xs font-medium">Avg Humidity</p>
-      <p class="text-xl font-bold text-gray-600">30%</p>
+      <p class="text-xl font-bold text-gray-600">{{avgHumidity}} %</p>
     </div>
   </div>
 
-  <!-- Rain Probability Card -->
+  
   <div class="bg-white rounded-2xl border-2  border-yellow-400 p-4 shadow-sm flex items-center gap-3">
     <div class="bg-yellow-100 rounded-xl p-3">
       <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-yellow-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">

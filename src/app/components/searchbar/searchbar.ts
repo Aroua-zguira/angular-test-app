@@ -28,10 +28,10 @@ export class Searchbar implements OnInit, OnDestroy {
   constructor(private geoLocationService: GeoLocationService) {}
 
   ngOnInit(): void {
-    // Setup autocomplete with debounce
+    
     this.searchSubject.pipe(
-      debounceTime(300), // Wait 300ms after user stops typing
-      distinctUntilChanged(), // Only emit if value changed
+      debounceTime(300), 
+      distinctUntilChanged(), 
       switchMap(query => {
         if (query.trim().length < 2) {
           this.isLoading = false;

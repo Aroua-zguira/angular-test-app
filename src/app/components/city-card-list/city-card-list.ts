@@ -1,42 +1,36 @@
 import { Component, Input, Output, EventEmitter, OnInit, OnChanges, SimpleChanges } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { CityCard } from '../city-card/city-card';
+import { DetailsModal } from "../details-modal/details-modal";
 
-interface CityData {
-  city: string;
-  weatherIcon: string;
-  temperature: number;
-  condition: string;
-  date: string;
-  wind: number;
-  humidity: number;
-  pressure: number;
-  lat: number;
-  lon: number;
-}
+
 
 @Component({
   selector: 'app-city-card-list',
   standalone: true,
-  imports: [CommonModule, CityCard],
+  imports: [CommonModule, CityCard, DetailsModal],
   templateUrl: './city-card-list.html',
   styleUrl: './city-card-list.css'
 })
-export class CityCardList implements OnInit, OnChanges {
+export class CityCardList implements  OnChanges {
   @Input() cities: any[] = [];
   @Input() isLoading: boolean = false;
   @Output() cityDeleted = new EventEmitter<{ lat: number, lon: number }>();
+  modalOpen = false;
+  selectedCityData: any | null = null;
 
-  // Pagination properties
+onOpenDetails(city: any) {
+  this.selectedCityData = city;    
+  this.modalOpen = true;
+}
+
+  
   itemsPerPage = 8;
   currentPage = 1;
 
-  ngOnInit() {
-    // Component initialization
-  }
+ 
 
   ngOnChanges(changes: SimpleChanges) {
-    // Reset to first page when cities data changes
     if (changes['cities'] && !changes['cities'].firstChange) {
       this.currentPage = 1;
     }
